@@ -10,7 +10,6 @@ CREATE TABLE users (
     user_email_verification_expires DATETIME NULL,
 
     -- Date parameters
-    user_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    user_created_at TIMESTAMP DEFAULT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     user_updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-

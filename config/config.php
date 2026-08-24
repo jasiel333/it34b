@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-require_once(__DIR__ . '/functions.php');
-define('base_url', 'http://localhost/it34_b/');
+require_once(__DIR__ . '/../includes/activity-logger.php');
+define('base_url', 'http://localhost/it34b/');
 
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'it34_b');
+define('DB_NAME', 'it34b');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 

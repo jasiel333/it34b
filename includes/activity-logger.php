@@ -24,6 +24,17 @@
                 ) VALUES (?, ?, ?, ?, ?, ?)
             ");
 
+            $stmt->execute([
+            $user_id,
+            $user_email,
+            $action,
+            $status,
+            $ip_,
+            $user_agent
+        ]);
+
+        return true;
+
         } catch (PDOException $e) {
             error_log("Activity Log Error: " . $e->getMessage());
             return false;

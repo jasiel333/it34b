@@ -9,10 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     $user_id = $_SESSION['user_id'] ?? null;
     $user_email = $_SESSION['user_email'] ?? null;
 
-
 }
-
-
 ?>
 
 <!DOCTYPE html>

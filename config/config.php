@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+require_once(__DIR__ . '/functions.php');
 define('base_url', 'http://localhost/it34_b/');
 
 define('DB_HOST', 'localhost');

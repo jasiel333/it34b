@@ -1,7 +1,7 @@
 <?php
 
 function redirect($path) {
-    define('BASE_URL', 'http://localhost/it34b/');
+    header('Location: ' . BASE_URL . $path);
     exit();
 }
 

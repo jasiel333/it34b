@@ -9,20 +9,39 @@ if(isset($_SESSION['user_id'])){
 
 $error='';
 
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $login = trim($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
 
-   if(loginUser($pdo,$login,$password)) {
+    if ($login == '' || $password === '') {
 
-        
+        // Log incomplete login attempt
+        logActivity($pdo, null, $login, 'login', 'failed');
+
+        $error = "Please enter username/email and password";
+
+    } elseif (loginUser($pdo, $login, $password)) {
+
+        // Log successful login
+        logActivity(
+            $pdo,
+            $_SESSION['user_id'],
+            $_SESSION['user_email'],
+            'login',
+            'success'
+        );
+
         header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
         exit;
-   }
-        
-   $error = "Invalid login credentials";
-   
+
+    } else {
+
+        // Log failed login
+        logActivity($pdo, null, $login, 'login', 'failed');
+
+        $error = "Invalid login credentials";
+    }
 }
  
 ?>

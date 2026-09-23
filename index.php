@@ -1,6 +1,6 @@
 <?php  
 require_once 'config/config.php';
-require_once 'config/functions.php';
+
 
 if(isset($_SESSION['user_id'])){
     header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login = trim($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    if ($login == '' || $password === '') {
+    if ($login == '' || $password === '') { 
 
         // Log incomplete login attempt
         logActivity($pdo, null, $login, 'login', 'failed');

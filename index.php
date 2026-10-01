@@ -1,48 +1,48 @@
-<?php  
+<?php
 require_once 'config/config.php';
 
-
 if(isset($_SESSION['user_id'])){
-    header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
+    header('Location ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
     exit;
 }
 
 $error='';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $login = trim($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    if ($login == '' || $password === '') { 
+    $error = 'Invalid login credentials';
 
+    if($login==='' || $password===''){
         // Log incomplete login attempt
-        logActivity($pdo, null, $login, 'login', 'failed');
+        logActivity($pdo,null,$login,'login','failed');
 
-        $error = "Please enter username/email and password";
+    } else {
 
-    } elseif (loginUser($pdo, $login, $password)) {
+    $result = loginUser($pdo,$login,$password);
 
-        // Log successful login
+    if($result===true){ 
+        // Log complete login attempt
         logActivity(
-            $pdo,
-            $_SESSION['user_id'],
+            $pdo,$_SESSION['user_id'],
             $_SESSION['user_email'],
             'login',
             'success'
         );
 
+        echo 'Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php';
         header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
         exit;
+    } else if($result=== 'active_session'){
 
+        $error = 'This account is already logged in on another device';
     } else {
-
-        // Log failed login
-        logActivity($pdo, null, $login, 'login', 'failed');
-
-        $error = "Invalid login credentials";
+        $error = 'Invalid login credentials';
     }
 }
+}
+
  
 ?>
 

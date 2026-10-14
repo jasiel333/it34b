@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             'success'
         );
 
-        echo 'Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php';
+       
         header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
         exit;
     } else if($result=== 'active_session'){
@@ -55,7 +55,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 </head>
 <body>
     
-<form method="POST">
+<form method="POST" action="<?= BASE_URL ?>/index.php">
     <label>Username or Email:</label>
     <input type="text" 
            name="login" 
@@ -69,6 +69,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <br><br>
     <button type="submit">Sign In</button>
 </form>
+
+<?php if ($error !== ''): ?>
+    <p style="color: red;">
+        <?= htmlspecialchars($error) ?>
+    </p>
+<?php endif; ?>
+
  
   <?php if(isset($_GET['timeout'])): ?>
     <p style="color:red;">Your session has timed out due to inactivity. Please log in again.</p>

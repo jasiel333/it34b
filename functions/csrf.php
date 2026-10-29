@@ -1,6 +1,6 @@
 <?php 
 //Generate a CSRF token 
-function generate_csrf_token() {
+function generateCsrfToken() {
     if (empty($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
@@ -11,7 +11,9 @@ function generate_csrf_token() {
 // Verify the CSRF token
 function verifyCsrfToken($token){
 
-    if (empty($_SESSION['csrf_token']) || empty($token)
+    if (
+        empty($_SESSION['csrf_token']) ||
+        empty($token)
         ){
         return false;
     }
@@ -21,11 +23,11 @@ function verifyCsrfToken($token){
         );
 }
 
-
 // Require CSRF token
-function requireCsrfToken($token) {
+function requireCsrfToken()
+ {
    
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if($_SERVER['REQUEST_METHOD'] !== 'POST') {
        return;
     }
 
@@ -33,9 +35,8 @@ function requireCsrfToken($token) {
 
     if (!verifyCsrfToken($token)) {
         http_response_code(403);
-        
+
         die('Invalid CSRF token');
     }
 }
-
 ?>
